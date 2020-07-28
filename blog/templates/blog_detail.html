@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %} <!--for receipt-->
+
+{% block page_content %}
+<div class="col-md-8 offset-md-2">
+    <h2>{{ post.title }}</h2>
+    <small>
+        {{ post.created_on.date }} |&nbsp;
+        Categories:&nbsp;
+        {% for category in post.categories.all %}
+        <a href="{% url 'blog_category' category.name %}">
+            {{ category.name }}
+        </a> | &nbsp;
+        <a> 총펀딩액: {{ post.totalfund  }}</a> 
+        {% endfor %}
+    </small>
+    <br/>
+    <br/>
+
+    <img src = "/media/{{post.images}}" align = "center" alt = "store pic" width = "400" height = "auto">
+    <br/>
+
+    <p>{{ post.body | linebreaks }}</p>
+  
+    <table class="divider" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" role="presentation" valign="top">
+        <tbody>
+            <tr style="vertical-align: top;" valign="top">
+                <td class="divider_inner" style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 15px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;" valign="top">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>주문서 작성</h4>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button type = "submit" class = "btn btn-primary">제출</button>
+    </form>
+ 
+
+    <table class="divider" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" role="presentation" valign="top">
+        <tbody>
+            <tr style="vertical-align: top;" valign="top">
+                <td class="divider_inner" style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 15px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;" valign="top">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h4>참여중인 사람들</h4>
+    {% for order in orders %}
+    <p>
+        <b>On {{ order.created_on.date }}</b>&nbsp;
+        </br><b>{{ order.author }} 님</b> 께서 {{ order.quantity }}장 주문하셨습니다.</p>
+    <p>
+        <b>참여후기</b>: {{ order.message_store }}
+    </p>
+    <hr>
+    {% empty %}
+    <!--<p>No comments here yet </p>-->
+    {% endfor %}
+    
+</div>
+{% endblock %}
+
+
+<!-- Archives -->
+    <!--<form action="/blog/{{ post.pk }}/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.author }}
+        </div>
+        <div class = "form-group">
+            {{form.quantity}}
+        </div>
+        <div class = "form-group">
+            {{form.phone}} 
+        </div>
+        <div class="form-group">
+            {{form.message_store }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit </button>
+    </form>-->
+
+    <!--<h4>Comments:</h4>
+    <form action="/blog/{{ post.pk }}/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.author }}
+        </div>
+        <div class="form-group">
+            {{ form.body }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit </button>
+    </form>-->
+    
+    <!--<h4>Comments:</h4>-->
+    {% for comment in comments %}
+    <p>
+        On {{comment.created_on.date }}&nbsp;
+        <b>{{ comment.author }}</b> wrote:
+    </p>
+    <p>{{ comment.body }}</p>
+    <hr>
+    {% empty %}
+    <!--<p>No comments here yet </p>-->
+    {% endfor %}
+
