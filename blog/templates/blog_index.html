@@ -2,7 +2,7 @@
 
 {% block page_content %}
 <div class="col-md-8 offset-md-2">
-    <h3>Restaurants</h3>
+    <h3>모두 함께.</h3>
     <hr>
     {% for post in posts %}
     <h3><a href="{% url 'blog_detail' post.pk%}">{{post.title}}</a></h3>
@@ -16,6 +16,11 @@
         {% endfor %}
         <a> 총펀딩액: {{ post.totalfund  }}</a> 
     </small>
+    
+    <div class = "progress" style = "height:15px; width:340px;" valign = "top;" >
+    <div class = "progress-bar" role = "progressbar" style = "width: 52%;"  aria-valuemin = "0" aria-valuemax = "100">25% (총 25만 8천원)</div>
+    </div>
+    
     <p>{{ post.body | slice:":400" }}...</p>
     {% endfor %}
 </div>

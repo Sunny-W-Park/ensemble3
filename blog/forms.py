@@ -1,24 +1,10 @@
 from django import forms
-from .models import Post,  Order #,Comment
+from .models import Post,  Order, Product #,Comment 
 
 PURCHASE_CHOICES = (
             ('T1', 'Type1 $7,800'),
             ('T2', 'Type2 $10,000'),
             )
-
-#class CommentForm(forms.Form):
-#    author = forms.CharField(
-#            max_length=60,
-#            widget=forms.TextInput(attrs={
-#                "class": "form-control",
-#                "placeholder": "Your Name | 이름을 적어주세요!"
-#                })
-#            )
-#    body = forms.CharField(widget=forms.Textarea(attrs={
-#            "class": "form-control",
-#            "placeholder": "Leave a comment! | 댓글을 남겨주세요! "
-#            })
-#        )
 
 class OrderForm(forms.Form):
     author = forms.CharField(max_length=60)
@@ -59,4 +45,18 @@ class OrderForm(forms.Form):
 #                "placeholder": "사장님께 보내는 한마디(전체공개) "
 #                })
 #            )
+
+#class CommentForm(forms.Form):
+#    author = forms.CharField(
+#            max_length=60,
+#            widget=forms.TextInput(attrs={
+#                "class": "form-control",
+#                "placeholder": "Your Name | 이름을 적어주세요!"
+#                })
+#            )
+#    body = forms.CharField(widget=forms.Textarea(attrs={
+#            "class": "form-control",
+#            "placeholder": "Leave a comment! | 댓글을 남겨주세요! "
+#            })
+#        )
 
