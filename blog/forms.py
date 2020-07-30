@@ -1,15 +1,9 @@
 from django import forms
 from .models import Post,  Order, Product #,Comment 
 
-PURCHASE_CHOICES = (
-            ('T1', 'Type1 $7,800'),
-            ('T2', 'Type2 $10,000'),
-            )
-
 class OrderForm(forms.Form):
-    author = forms.CharField(max_length=60)
-    option  = forms.ChoiceField(choices=PURCHASE_CHOICES)
-    quantity = forms.IntegerField(
+    author = forms.CharField(max_length =60)
+    quantity = forms.IntegerField(max_value = 10,
             widget=forms.TextInput(attrs={"placeholder": "1회 주문 최대 10장"
                 })
             )

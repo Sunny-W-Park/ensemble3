@@ -21,15 +21,15 @@ class ProductAdmin(admin.ModelAdmin):
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
+            'created_on',
             'author',
-            'option',
+            'post',
             'quantity',
             'email',
             'phone',
             'message_store',
-            'post',
             )
-    search_fields = ('author','option', 'phone')
+    search_fields = ('author', 'post', 'phone')
     pass
 
 #class CommentAdmin(admin.ModelAdmin):

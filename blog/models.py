@@ -8,15 +8,9 @@ class Category(models.Model):
         return self.name
 
 class Post(models.Model):
-    #PURCHASE_CHOICES = (
-    #        ('T1', 'Type1 $7,800'),
-    #        ('T2', 'Type2 $10,000'), 
-    #        ) 
     title = models.CharField(max_length=255)
     totalfund = models.CharField(max_length=20, null = True, blank = True)
     body = models.TextField()
-    producttype = models.ManyToManyField('Product', related_name = 'posts')
-    #purchasetype = models.CharField(max_length= 60, choices=PURCHASE_CHOICES, null = True) 
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField('Category', related_name='posts')
@@ -31,19 +25,13 @@ class Product(models.Model):
     price = models.DecimalField(max_digits = 10, decimal_places = 2)
     def price_display(self):
         return "₩%s" % self.price
-    inventory = models.FloatField()
-    call = models.FloatField()
-    sum_call = models.FloatField()
-    stat_rate = models.FloatField()
+    inventory = models.IntegerField(default = 0)
+    call = models.IntegerField(default = 0)
+    sum_call = models.IntegerField(default = 0)
+    stat_rate = models.IntegerField(default = 0)
 
 class Order(models.Model):
-    #PURCHASE_CHOICES = (
-    #        ('T1', 'Type1 $7,800'),
-    #        ('T2', 'Type2 $10,000'), 
-    #        )
     author = models.CharField(max_length = 60)
-    #purchasetype = models.CharField(max_length= 60, choices=PURCHASE_CHOICES, null = True)
-    option = models.CharField(max_length = 60, null = True)
     quantity = models.IntegerField(validators = [MinValueValidator(1), MaxValueValidator(10)])
     email = models.CharField(max_length = 60, null = True, blank = False)
     phone = models.CharField(max_length = 120, null = False, blank = False)

@@ -16,7 +16,6 @@ def blog_category(request, category):
     context = {"category": category, "posts": posts}
     return render(request, "blog_category.html", context)
 
-
 def blog_detail(request, pk):
     post = Post.objects.get(pk=pk)
 
@@ -26,7 +25,6 @@ def blog_detail(request, pk):
        if form.is_valid():
            order = Order(
                    author = form.cleaned_data["author"],
-                   option = form.cleaned_data["option"],
                    quantity = form.cleaned_data["quantity"],
                    email = form.cleaned_data["email"],
                    phone = form.cleaned_data["phone"],
@@ -38,6 +36,8 @@ def blog_detail(request, pk):
     orders = Order.objects.filter(post=post)
     context = {"post":post, "orders":orders, "form":form}
     return render(request, "blog_detail.html", context)
+
+#def order(request)
 
 #Create your views here.
 
