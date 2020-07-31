@@ -10,6 +10,10 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     totalfund = models.CharField(max_length=20, null = True, blank = True)
+    call = models.IntegerField(default=0, null = True)                      #주문량총계
+    inventory = models.IntegerField(default=0, null = True)                 #쿠폰수량
+    call_rate = models.IntegerField(default=0, null = True)                 #쿠폰펀딩률
+    price = models.IntegerField(default=0, null = True)                     #가격
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -38,7 +42,10 @@ class Order(models.Model):
     message_store = models.CharField(max_length=256)
     post = models.ForeignKey('Post', on_delete=models.CASCADE, null = True) #forDB
     created_on = models.DateTimeField(auto_now_add = True, null = True)
-
+    def __str__(self):
+        return self.author
+    def __str__(self):
+        return self.post
 #class Comment(models.Model):
 #    author = models.CharField(max_length=60)
 #    body = models.TextField()
