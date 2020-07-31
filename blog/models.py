@@ -35,7 +35,9 @@ class Product(models.Model):
     stat_rate = models.IntegerField(default = 0)
 
 class Order(models.Model):
-    author = models.CharField(max_length = 60)
+    이름 = models.CharField(max_length = 60, null = True)
+    sender = models.CharField(max_length = 60, null = True)
+    author = models.CharField(max_length = 60, null = True, blank = True)
     quantity = models.IntegerField(validators = [MinValueValidator(1), MaxValueValidator(10)])
     email = models.CharField(max_length = 60, null = True, blank = False)
     phone = models.CharField(max_length = 120, null = False, blank = False)

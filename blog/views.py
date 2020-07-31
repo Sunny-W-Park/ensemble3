@@ -24,6 +24,8 @@ def blog_detail(request, pk):
        form = OrderForm(request.POST)
        if form.is_valid():
            order = Order(
+                   이름 = form.cleaned_data["이름"],
+                   sender  = form.cleaned_data["sender"],
                    author = form.cleaned_data["author"],
                    quantity = form.cleaned_data["quantity"],
                    email = form.cleaned_data["email"],

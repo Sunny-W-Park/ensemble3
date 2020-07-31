@@ -2,7 +2,11 @@ from django import forms
 from .models import Post,  Order, Product #,Comment 
 
 class OrderForm(forms.Form):
-    author = forms.CharField(max_length =60)
+    이름 = forms.CharField(max_length = 60)
+    sender  = forms.CharField(max_length =60,
+            widget=forms.TextInput(attrs={"placeholder": "결제시 입금자명"}))
+    author  = forms.CharField(max_length =60,
+            widget=forms.TextInput(attrs={"placeholder": "하단 댓글창에 표기 "}))
     quantity = forms.IntegerField(max_value = 10,
             widget=forms.TextInput(attrs={"placeholder": "1회 주문 최대 10장"
                 })

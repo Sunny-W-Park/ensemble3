@@ -22,6 +22,8 @@ class ProductAdmin(admin.ModelAdmin):
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
             'created_on',
+            '이름',
+            'sender',
             'author',
             'post',
             'quantity',
