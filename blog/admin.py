@@ -22,7 +22,6 @@ class ProductAdmin(admin.ModelAdmin):
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
             'created_on',
-            '이름',
             'sender',
             'author',
             'post',
@@ -32,7 +31,7 @@ class OrderAdmin(admin.ModelAdmin):
             'message_store',
             )
     search_fields = ('author', 'post', 'phone')
-    pass
+
 
 #class CommentAdmin(admin.ModelAdmin):
 #    pass

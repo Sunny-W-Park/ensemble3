@@ -3,6 +3,20 @@
 {% load crispy_forms_tags %} <!--for receipt-->
 
 {% block page_content %}
+
+
+<style>
+.slide { 
+    display: flex; 
+    overflow-x: auto;
+}
+.slide img{
+    margin-right: 15px;
+}
+ 
+</style>
+
+
 <div class="col-md-8 offset-md-2">
     <h2>{{ post.title }}</h2>
     <small>
@@ -23,7 +37,14 @@
     <br/>
     <br/>
 
-    <img src = "/media/{{post.images}}" align = "center" alt = "store pic" width = "400" height = "auto">
+    <!--***** Photo Slide *****-->
+
+<div class = "slide">
+    <img src = "/media/{{post.image1}}" alt = "StorePic1" width = "400", height = "350">
+    <img src = "/media/{{post.image2}}" alt = "StorePic2" width = "400", height = "350">
+    <img src = "/media/{{post.image3}}" alt = "StorePic3" width = "400", height = "350">
+</div>
+
     <br/>
 
     <p>{{ post.body | linebreaks }}</p>
@@ -42,7 +63,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form | crispy }}
-        <button type = "submit" class = "btn btn-primary">제출</button>
+        <button type = "submit" class = "btn btn-primary">제출하기</button>
     </form>
  
 
@@ -56,13 +77,21 @@
     </table>
 
 
-    <h4>참여중인 사람들</h4>
+    <h4> 함께하는 사람들 <a> [{{ post.orders.count }}] </a></h4>
+
+
+
+    <!--{% if order.order_count %}
+    <span>[{{ order.order_count }}]</span>
+    {% endif %}-->
+
+
     {% for order in orders %}
     <p>
         <b>On {{ order.created_on.date }}</b>&nbsp;
         </br><b>{{ order.author }} 님</b> 께서 {{ order.quantity }}장 주문하셨습니다.</p>
     <p>
-        <b>참여후기</b>: {{ order.message_store }}
+    <b>"{{ order.message_store }}"</b>
     </p>
     <hr>
     {% empty %}

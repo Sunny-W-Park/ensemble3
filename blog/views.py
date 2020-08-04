@@ -23,21 +23,41 @@ def blog_detail(request, pk):
     if request.method == "POST":
        form = OrderForm(request.POST)
        if form.is_valid():
-           order = Order(
-                   이름 = form.cleaned_data["이름"],
+                order = Order(
                    sender  = form.cleaned_data["sender"],
                    author = form.cleaned_data["author"],
-                   quantity = form.cleaned_data["quantity"],
+                   quantity  = form.cleaned_data["quantity"],
                    email = form.cleaned_data["email"],
                    phone = form.cleaned_data["phone"],
                    message_store = form.cleaned_data["message_store"],
                    post=post,
                    )
-           order.save()
-           return redirect("/blog/")
-    orders = Order.objects.filter(post=post)
-    context = {"post":post, "orders":orders, "form":form}
+                order.save()
+                return redirect("/blog/")
+
+    orders = Order.objects.filter(post=post).order_by('-created_on')
+    order_count = orders.count()
+    context = {"post":post, "orders":orders, "form":form, "order_count":order_count,}
     return render(request, "blog_detail.html", context)
+
+#def order_write_view(request, pk):
+#    post = get_object_or_404(Blog, id=pk)
+#    author = request.POST.get('author')
+#    message_store = request.POST.get('message_store')
+#    if message_store:
+#        order = Order.objects.create(post=post, message_store=message_store, author=author)
+#        order_count = Order.objects.filter(post=pk).count()
+#        post.orders = order_count
+#        post.save()
+#
+#        data = {
+#                'author': author,
+#                'message_store': message_store,
+#                'order_count': order_count
+#                }
+#
+#       return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type = "application/json")
+
 
 #def order(request)
 

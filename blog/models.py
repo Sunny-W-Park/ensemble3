@@ -2,23 +2,33 @@ from django.db import models
 from django.db.models import Count
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+#Signals
+#from django.db.models.signals import post_save
+#from django.dispatch import receiver
+
+
 class Category(models.Model):
     name = models.CharField(max_length=20)
     def __str__(self):
         return self.name
 
 class Post(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, verbose_name = '제목')
     totalfund = models.CharField(max_length=20, null = True, blank = True)
-    call = models.IntegerField(default=0, null = True)                      #주문량총계
-    inventory = models.IntegerField(default=0, null = True)                 #쿠폰수량
-    call_rate = models.IntegerField(default=0, null = True)                 #쿠폰펀딩률
-    price = models.IntegerField(default=0, null = True)                     #가격
+    call = models.PositiveIntegerField(default=0, verbose_name = '주문량', null = True) 
+    inventory = models.PositiveIntegerField(default=0, verbose_name = '잔여수량', null = True)
+    call_rate = models.PositiveIntegerField(default=0, verbose_name = '쿠폰펀딩률', null = True)
+    price = models.IntegerField(default=0, verbose_name = '가격', null = True)
+    min_call = models.PositiveIntegerField(default=0, verbose_name = '최소판매량', null = True)
+    target_call  = models.PositiveIntegerField(default=0, verbose_name = '목표판매량',  null = True)
+    max_call = models.PositiveIntegerField(default=0, verbose_name= '최대판매량',  null = True)
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField('Category', related_name='posts')
-    images = models.ImageField(upload_to ='blog/images', max_length = 550, null = True, blank = True)
+    image1 = models.ImageField(upload_to ='blog/images', max_length = 550, null = True, blank = True)
+    image2 = models.ImageField(upload_to ='blog/images', max_length = 550, null = True, blank = True)
+    image3 = models.ImageField(upload_to ='blog/images', max_length = 550, null = True, blank = True)
     def __str__(self):
         return self.title
 
@@ -35,19 +45,18 @@ class Product(models.Model):
     stat_rate = models.IntegerField(default = 0)
 
 class Order(models.Model):
-    이름 = models.CharField(max_length = 60, null = True)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='orders',  null = True) #forDB 
     sender = models.CharField(max_length = 60, null = True)
     author = models.CharField(max_length = 60, null = True, blank = True)
-    quantity = models.IntegerField(validators = [MinValueValidator(1), MaxValueValidator(10)])
+    quantity = models.PositiveIntegerField(validators = [MinValueValidator(1), MaxValueValidator(5)])
     email = models.CharField(max_length = 60, null = True, blank = False)
     phone = models.CharField(max_length = 120, null = False, blank = False)
-    message_store = models.CharField(max_length=256)
-    post = models.ForeignKey('Post', on_delete=models.CASCADE, null = True) #forDB
+    message_store = models.CharField(max_length=256, null = True, blank = True)
     created_on = models.DateTimeField(auto_now_add = True, null = True)
     def __str__(self):
         return self.author
-    def __str__(self):
-        return self.post
+
+
 #class Comment(models.Model):
 #    author = models.CharField(max_length=60)
 #    body = models.TextField()
