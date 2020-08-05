@@ -26,7 +26,7 @@ SECRET_KEY = '$^e7cfr2n_pob(de$fyc_zq9ij3=!p17jfjrsu=f!w_yu!#@(w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  #20/07/06 Django will display a standard 404 page
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'http://192.168.0.8:8000', '192.168.0.8']
 
 
 # Application definition

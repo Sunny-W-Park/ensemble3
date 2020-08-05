@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
+from django.db import transaction
 
 from .forms import OrderForm  #CommentForm
 from blog.forms import OrderForm  #CommentForm
-from blog.models import Post, Order, Product  #Comment
+from blog.models import Post, Order, Product, HitCount  #Comment
+
 
 def blog_index(request):
-    posts = Post.objects.all().order_by("-created_on")
+    posts = Post.objects.all().order_by("title")
     context = {"posts": posts}
     return render(request, "blog_index.html", context)
 
@@ -16,89 +18,95 @@ def blog_category(request, category):
     context = {"category": category, "posts": posts}
     return render(request, "blog_category.html", context)
 
+
 def blog_detail(request, pk):
     post = Post.objects.get(pk=pk)
-
     form = OrderForm()
-    if request.method == "POST":
-       form = OrderForm(request.POST)
-       if form.is_valid():
-                order = Order(
-                   sender  = form.cleaned_data["sender"],
-                   author = form.cleaned_data["author"],
-                   quantity  = form.cleaned_data["quantity"],
-                   email = form.cleaned_data["email"],
-                   phone = form.cleaned_data["phone"],
-                   message_store = form.cleaned_data["message_store"],
-                   post=post,
-                   )
-                order.save()
-                return redirect("/blog/")
 
+    if request.method =="POST":
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            with transaction.atomic():
+                post = Post.objects.get(pk=pk)
+                order = Order(
+                sender = form.data.get('sender'),
+                author = form.data.get('author'),
+                quantity = form.data.get('quantity'),
+                email = form.data.get('email'),
+                phone = form.data.get('phone'),
+                message_store = form.data.get('message_store'),
+                post = post
+                )
+            order.save()
+
+            post.call += int(form.data.get('quantity'))
+            post.save()
+        return redirect('/blog/')
     orders = Order.objects.filter(post=post).order_by('-created_on')
     order_count = orders.count()
     context = {"post":post, "orders":orders, "form":form, "order_count":order_count,}
     return render(request, "blog_detail.html", context)
 
-#def order_write_view(request, pk):
-#    post = get_object_or_404(Blog, id=pk)
-#    author = request.POST.get('author')
-#    message_store = request.POST.get('message_store')
-#    if message_store:
-#        order = Order.objects.create(post=post, message_store=message_store, author=author)
-#        order_count = Order.objects.filter(post=pk).count()
-#        post.orders = order_count
+#*****HitCount*****
+
+#try:
+#    hits = HitCount.objects.get(ip=ip, post=post)
+#except Exception as e:
+#    print(e)
+#    Post.objects.filter(attachment_ptr_id = post_id).update(hits=post.hits +1)
+#    hits.save()
+#else:
+#    if not hits.date == timezone.now().date():
+#        Post.objects.filter(attachment_ptr_id = post_id).update(hits=post.hits +1)
+#        hits.date = timezone.now()
+#        hits.save()
+#    else:
+#        print(str(ip) + 'has already hit this post. \n\n')
+
+
+#def form_valid(form):
+#    with transaction.atomic():
+#        post = Post.objects.get(pk=pk)
+#        order = Order(
+#                sender = form.data.get('sender'),
+#                author = form.data.get('author'),
+#                quantity = form.data.get('quantity'),
+#                email = form.data.get('email'),
+#                phone = form.data.get('phone'),
+#                message_store = form.data.get('message_store'),
+#                post = post
+#                )
+#        order.save()
+# 
+#        post.call += int(form.data.get('quantity'))
 #        post.save()
-#
-#        data = {
-#                'author': author,
-#                'message_store': message_store,
-#                'order_count': order_count
-#                }
-#
-#       return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type = "application/json")
+#    return super().form_valid(form)
 
 
-#def order(request)
+##### Original Orderview #####
 
-#Create your views here.
-
-#Archives
-#def blog_detail(request, pk):
-#    post = Post.objects.get(pk=pk)
-
-    #form = CommentForm()
-    #if request.method == "POST":
-    #   form = CommentForm(request.POST)
-    #   if form.is_valid():
-    #       comment = Comment(
-    #               author=form.cleaned_data["author"],
-    #               body=form.cleaned_data["body"],
-    #               post=post,
-    #               )
-    #       comment.save()
-    #       return redirect("/blog/")
-       #edit url to redirect
-    #comments = Comment.objects.filter(post=post)
-    #context = {"post":post, "comments":comments, "form":form,}
-    #return render(request, "blog_detail.html", context)
 
 #def blog_detail(request, pk):
 #    post = Post.objects.get(pk=pk)
-
-    #form = CommentForm()
-    #if request.method == "POST":
-    #   form = CommentForm(request.POST)
-    #   if form.is_valid():
-    #       comment = Comment(
-    #               author=form.cleaned_data["author"],
-    #               body=form.cleaned_data["body"],
-    #               post=post,
-    #               )
-    #       comment.save()
-    #       return redirect("/blog/")
-       #edit url to redirect
-    #comments = Comment.objects.filter(post=post)
-    #context = {"post":post, "comments":comments, "form":form,}
-    #return render(request, "blog_detail.html", context)
+#    form = OrderForm()
+#
+#    if request.method == "POST":
+#       form = OrderForm(request.POST)
+#       if form.is_valid():
+#                order = Order(
+#                   sender  = form.cleaned_data["sender"],
+#                   author = form.cleaned_data["author"],
+#                   quantity  = form.cleaned_data["quantity"],
+#                   email = form.cleaned_data["email"],
+#                   phone = form.cleaned_data["phone"],
+#                   message_store = form.cleaned_data["message_store"],
+#                   post=post,
+#                   )
+#                order.save()
+#                return redirect("/blog/")
+#
+#    orders = Order.objects.filter(post=post).order_by('-created_on')
+#    order_count = orders.count()
+#    context = {"post":post, "orders":orders, "form":form, "order_count":order_count,}
+#    return render(request, "blog_detail.html", context)
 

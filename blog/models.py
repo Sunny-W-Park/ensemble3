@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Count
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils import timezone
 
 #Signals
 #from django.db.models.signals import post_save
@@ -16,8 +17,8 @@ class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name = '제목')
     totalfund = models.CharField(max_length=20, null = True, blank = True)
     call = models.PositiveIntegerField(default=0, verbose_name = '주문량', null = True) 
-    inventory = models.PositiveIntegerField(default=0, verbose_name = '잔여수량', null = True)
     call_rate = models.PositiveIntegerField(default=0, verbose_name = '쿠폰펀딩률', null = True)
+    menu = models.TextField(max_length=255, verbose_name = '메뉴', null = True)
     price = models.IntegerField(default=0, verbose_name = '가격', null = True)
     min_call = models.PositiveIntegerField(default=0, verbose_name = '최소판매량', null = True)
     target_call  = models.PositiveIntegerField(default=0, verbose_name = '목표판매량',  null = True)
@@ -56,6 +57,10 @@ class Order(models.Model):
     def __str__(self):
         return self.author
 
+class HitCount(models.Model):
+    ip = models.CharField(max_length = 15, default = None, null = True)
+    post  = models.ForeignKey('Post', on_delete=models.CASCADE, default = None, null = True) #forDB  
+    date = models.DateField(default = timezone.now(), null = True, blank = True) #Count on Date
 
 #class Comment(models.Model):
 #    author = models.CharField(max_length=60)

@@ -3,37 +3,11 @@
 
 {% block page_content %}
 
-
-<!--<div class="col-md-8 offset-md-2">
-    <h3>Restaurant Week</h3>
-    <hr>
-    {% for post in posts %}
-    <h3><a href="{% url 'blog_detail' post.pk%}">{{post.title}}</a></h3>
-    <small>
-        {{ post.created_on.date}} |&nbsp;
-        Categories:&nbsp;
-        {% for category in post.categories.all %}
-        <a href="{% url 'blog_category' category.name %}">
-            {{ category.name }}
-        </a> |&nbsp;
-        {% endfor %}
-        <a> 총펀딩액: {{ post.totalfund  }}</a> 
-    </small>
-    
-    <div class = "progress" style = "height:15px; width:340px;" valign = "top;" >
-        <div class = "progress-bar" role = "progressbar" style = "width: {{post.call_rate}}%;"  aria-valuemin = "0" aria-valuemax = "100"> {{post.call}}%(총 25만 8천원)</div>
-    </div>
-
-    <p>{{ post.body | slice:":400" }}...</p>
-    {% endfor %}
-</div>-->
-
-
         <section class="page-section bg-success" id="banner">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8 text-center">
-                        <h2 class="text-white mt-0">오직 안암동에서만.</h2>
+                        <h2 class="text-white mt-0">오직 상동에서만.</h2>
                         <hr class="divider light my-4" />
                         <p class="text-white-50 mb-4">Start Bootstrap has everything you need to get your new website up and running in no time! Choose one of our open source, free to download, and easy to use themes! No strings attached!</p>
                         <a class="btn btn-light btn-xl js-scroll-trigger" href="#services">Get Started!</a>
@@ -60,10 +34,12 @@
                 {{ category.name }}
                 </a> |&nbsp;
                 {% endfor %}
-                <a> 총펀딩액: {{ post.totalfund  }}</a> 
+                <a> 총펀딩액: {{ post.totalfund  }}</a>
+                </br>
+                누적 주문: {{ post.call  }}장 
                 </small>
                 
-                
+                 
                 <div class = "progress" style = "height:15px; width:340px;" valign = "top;" >
                 <div class = "progress-bar" role = "progressbar" style = "width: {{post.call_rate}}%;"  aria-valuemin = "0" aria-valuemax = "100"> {{post.call}}%(총 25만 8천원)
                 </div>
