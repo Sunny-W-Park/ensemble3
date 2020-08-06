@@ -1,15 +1,23 @@
+from __future__ import unicode_literals
+
 from django.shortcuts import render, redirect
-from django.db import transaction
+from django.db import models, transaction
+from django.db.models import F
+
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.generic import View, DetailView
 
 from .forms import OrderForm  #CommentForm
 from blog.forms import OrderForm  #CommentForm
-from blog.models import Post, Order, Product, HitCount  #Comment
+from blog.models import Post, Order, Product  #Comment
 
+from hitcount.views import HitCountDetailView, HitCountMixin
 
 def blog_index(request):
     posts = Post.objects.all().order_by("title")
     context = {"posts": posts}
     return render(request, "blog_index.html", context)
+
 
 def blog_category(request, category):
     posts = Post.objects.filter(categories__name__contains=category).order_by(
@@ -22,8 +30,9 @@ def blog_category(request, category):
 def blog_detail(request, pk):
     post = Post.objects.get(pk=pk)
     form = OrderForm()
+    post.click
 
-    if request.method =="POST":
+    if request.method == "POST":
         form = OrderForm(request.POST)
         if form.is_valid():
             with transaction.atomic():
@@ -44,11 +53,20 @@ def blog_detail(request, pk):
         return redirect('/blog/')
     orders = Order.objects.filter(post=post).order_by('-created_on')
     order_count = orders.count()
-    context = {"post":post, "orders":orders, "form":form, "order_count":order_count,}
+    context = {"post": post, "orders": orders, "form": form, "order_count": order_count,}
     return render(request, "blog_detail.html", context)
 
-#*****HitCount*****
+class PostMixinDetailView(object):
+    model = Post
 
+class PostDetailView(PostMixinDetailView, HitCountDetailView):
+    pass
+
+class PostCountHitDetailView(HitCountDetailView):
+    count_hit = True
+
+
+#*****HitCount*****
 #try:
 #    hits = HitCount.objects.get(ip=ip, post=post)
 #except Exception as e:

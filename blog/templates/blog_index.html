@@ -30,7 +30,7 @@
    
 
                 <small>
-                {{ post.created_on.date}} |&nbsp;
+                조회수: {{ post.hits  }} |&nbsp;
                 Categories:&nbsp;
                 {% for category in post.categories.all %}
                 <a href="{% url 'blog_category' category.name %}">

@@ -1,7 +1,14 @@
+from __future__ import unicode_literals
+
 from django.db import models
+from django.contrib.contenttypes.fields import GenericRelation
+
 from django.db.models import Count
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
+
+from hitcount.models import HitCountMixin
+from hitcount.settings import MODEL_HITCOUNT
 
 #Signals
 #from django.db.models.signals import post_save
@@ -15,13 +22,14 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name = '제목')
+    hits = models.PositiveIntegerField(verbose_name = '조회수', default = 0)
     totalfund = models.CharField(max_length=20, null = True, blank = True)
     call = models.PositiveIntegerField(default=0, verbose_name = '주문량', null = True) 
     call_rate = models.PositiveIntegerField(default=0, verbose_name = '쿠폰펀딩률', null = True)
     menu = models.TextField(max_length=255, verbose_name = '메뉴', null = True)
     price = models.IntegerField(default=0, verbose_name = '가격', null = True)
     min_call = models.PositiveIntegerField(default=0, verbose_name = '최소판매량', null = True)
-    target_call  = models.PositiveIntegerField(default=0, verbose_name = '목표판매량',  null = True)
+    target_call = models.PositiveIntegerField(default=0, verbose_name = '목표판매량',  null = True)
     max_call = models.PositiveIntegerField(default=0, verbose_name= '최대판매량',  null = True)
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
@@ -35,6 +43,11 @@ class Post(models.Model):
     image3 = models.ImageField(upload_to ='blog/images', max_length = 550, null = True, blank = True)
     def __str__(self):
         return self.title
+    
+    @property
+    def click(self):
+        self.hits += 1
+        self.save()
 
 class Product(models.Model):
     name = models.CharField(max_length = 255)
@@ -60,10 +73,13 @@ class Order(models.Model):
     def __str__(self):
         return self.author
 
-class HitCount(models.Model):
-    ip = models.CharField(max_length = 15, default = None, null = True)
-    post  = models.ForeignKey('Post', on_delete=models.CASCADE, default = None, null = True) #forDB  
-    date = models.DateField(default = timezone.now(), null = True, blank = True) #Count on Date
+
+class Hitcount(models.Model, HitCountMixin):
+    hit_count_generic = GenericRelation(
+            MODEL_HITCOUNT, object_id_field='object_pk',
+            related_query_name='hit_count_generic_relation'
+            )
+    pass
 
 #class Comment(models.Model):
 #    author = models.CharField(max_length=60)
