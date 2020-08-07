@@ -50,11 +50,16 @@ def blog_detail(request, pk):
 
             post.call += int(form.data.get('quantity'))
             post.save()
-        return redirect('/blog/')
+        return render(request, 'SubmitOK.html')
     orders = Order.objects.filter(post=post).order_by('-created_on')
     order_count = orders.count()
     context = {"post": post, "orders": orders, "form": form, "order_count": order_count,}
     return render(request, "blog_detail.html", context)
+
+def blog_submit(request):
+    return render(request, "SubmitOK.html")
+
+
 
 class PostMixinDetailView(object):
     model = Post

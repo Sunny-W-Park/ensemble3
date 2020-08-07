@@ -19,16 +19,18 @@ class OrderForm(forms.Form):
             )
     email = forms.CharField(
             label = '이메일',
-            widget=forms.TextInput(attrs={'placeholder':'주문확인, 결제안내 및 쿠폰수신'})
+            widget=forms.TextInput(attrs={'placeholder': '주문확인, 결제안내 및 쿠폰수신'})
             )
     phone = forms.CharField(
             label = '휴대폰 번호',
             max_length=120,
-            widget=forms.TextInput(attrs={'placeholder':'결제안내 문자 수신'})
+            widget=forms.TextInput(attrs={'placeholder': '결제안내 문자 수신'})
             )
     message_store = forms.CharField(
             label = '사장님께 보내는 한 마디! ',
-            max_length=256)
+            max_length=256,
+            widget=forms.TextInput(attrs={'placeholder': '게시글 하단 전체공개'})
+            )
 
     def clean(self):
         cleaned_data = super().clean()

@@ -136,7 +136,7 @@
 
     {% for order in orders %}
     <p>
-        <b>On {{ order.created_on.date }}</b>&nbsp;
+        <b>{{ order.created_on.date }}</b>&nbsp;
         </br><b>{{ order.author }} 님</b> 께서 {{ order.quantity }}장 주문하셨습니다.</p>
     <p>
     <b>"{{ order.message_store }}"</b>

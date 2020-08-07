@@ -1,0 +1,151 @@
+﻿<!doctype html>
+
+
+{% extends "base.html" %}
+
+{% block page_content %}
+
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>앙상블 FAQ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    
+
+    <style>
+
+        #container {
+            width: 1000px;
+            margin: 0px auto;
+            padding: 20px;
+         
+        }
+
+
+        #header {
+            padding: 20px;
+            margin-bottom: 20px;
+        
+        }
+
+        #title {
+            width: 980px;
+            padding: 20px;
+            float: left;
+         
+        }
+
+
+        #divider {
+            width: 100%;
+            height: 3px;
+            background-color: red;
+            float: left;
+       
+        }
+
+        #divider1 {
+            width: 100%;
+            height: 1px;
+            background-color: grey;
+            float: left;
+         
+        }
+
+        #content {
+            width: 980px;
+            padding: 20px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+            float: left;
+         
+        }
+
+
+        #gap {
+            width: 100%;
+            height: 40px;
+            float: left;
+         
+        }
+
+
+        #footer {
+            clear: both;
+            padding-top: 60px;
+            padding-bottom: 50px;
+       
+        }
+
+        @media ( max-width: 480px ) {
+            #container {
+                width: auto;
+            }
+
+            #title {
+                width: auto;
+            }
+
+            #content {
+                width: auto;
+            }
+
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+    <!-- 타이틀 -->
+    <div id="container">
+        <div id="header" style="text-align: center;">
+            <h1>안암 레스토랑 위크 FAQ</h1>
+        </div>
+
+        <!-- FAQ 내용 -->
+        <!-- 내용 1 -->
+
+        <div id="title">
+            <h2>Q. 도중에 가게가 사라지면 어떡하나요?</h2>
+        </div>
+
+        <div id="divider"></div>
+
+        <div id="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
+        </div>
+
+        <!-- 내용 2 -->
+        <div id="title">
+            <h2>Q. 도중에 가게가 사라지면 어떡하나요?</h2>
+        </div>
+
+        <div id="divider"></div>
+
+        <div id="content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
+        </div>
+
+        <!-- footer -->
+        <div id="gap"></div>
+        <div id="divider1"></div>
+        <div id="footer" style="text-align: center;">
+            <img src="https://i.imgur.com/4AFsRA6.png" width="25" height="auto" /> <!-- 이메일 -->
+            <img src="https://i.imgur.com/gAISVdx.png" width="25" height="auto" /> <!-- 인스타 -->
+            <img src="https://i.imgur.com/9oesAT7.png" width="25" height="auto" /> <!-- 웹사이트 -->
+
+            <br />
+            <br /> Ensemble 2.0
+            <br /> ANAM RESTAURANT WEEK
+        </div>
+
+    </div>
+
+    <!-- 경계선: border: 1px solid #bcbcbc;-->
+</body>
+</html>
+
+{% endblock %}
