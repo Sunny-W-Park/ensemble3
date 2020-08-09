@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     #'polls.apps.PollsConfig',
     'polls.apps.PollsConfig',
     'daemun.apps.DaemunConfig',
-    'faq.apps.FaqConfig',
+    #'faq.apps.FaqConfig',
     'imagekit',
     'crispy_forms',
     'hitcount',

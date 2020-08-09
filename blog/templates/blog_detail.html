@@ -23,8 +23,7 @@
 
 </style>
 
-
-<div class="col-md-8 offset-md-2">
+<div class="col-md-8 offset-md-2;">
     <h2>{{ post.title }}</h2>
     <small>
         조회수: {{ post.hits  }} |&nbsp;
@@ -105,6 +104,22 @@
             </tr>
         </tbody>
     </table>
+    
+    <h4>사용 안내</h4>
+    <p>{{ post.guide | linebreaks }}</p>
+
+    <table class="divider" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" role="presentation" valign="top">
+        <tbody>
+            <tr style="vertical-align: top;" valign="top">
+                <td class="divider_inner" style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 15px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;" valign="top">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <hr class="divider my-4" />
+
 
     <h4>주문서 작성</h4>
     
@@ -123,6 +138,9 @@
             </tr>
         </tbody>
     </table>
+
+
+    <hr class="divider my-4" />
 
 
     <h4> 함께하는 사람들 <a> [{{ post.orders.count }}] </a></h4>
