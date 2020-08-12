@@ -21,10 +21,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$^e7cfr2n_pob(de$fyc_zq9ij3=!p17jfjrsu=f!w_yu!#@(w'
+
+import os
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '$^e7cfr2n_pob(de$fyc_zq9ij3=!p17jfjrsu=f!w_yu!#@(w')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  #20/07/06 Django will display a standard 404 page
+DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )  #20/07/06 Django will display a standard 404 page
 
 ALLOWED_HOSTS = ['localhost', 'http://192.168.0.8:8000', '192.168.0.8', '192.168.0.179']
 
