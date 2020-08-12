@@ -1,1 +1,1 @@
-web: gunicorn ensemble2.wsgi --log-file -
+web: gunicorn ensemble_monday.wsgi --log-file -
