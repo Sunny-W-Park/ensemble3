@@ -22,9 +22,24 @@
     float: left;
 }
 
+
+#containerr {
+        width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+
+    }
+
+    @media (max-width: 700px) {
+        #containerr {
+            width: auto;
+        }
+    }
+
 </style>
 
-<div class="col-md-8 offset-md-2;">
+<div id="containerr">
+<div class="col-md-8 offset-md-2; style="margin: 0 auto;">
     <h2>{{ post.title }}</h2>
     <small>
         조회수: {{ post.hits  }} |&nbsp;
@@ -165,6 +180,7 @@
     <!--<p>No comments here yet </p>-->
     {% endfor %}
     
+</div> 
 </div>
 {% endblock %}
 
